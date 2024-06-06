@@ -1,9 +1,51 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
+import React, { useEffect } from 'react'
+import { useSetState } from 'ahooks'
+import { createRoot } from 'react-dom/client'
+import { ConfigProvider, theme } from 'antd'
+import zhCN from 'antd/locale/zh_CN'
+import { useSnapshot } from 'valtio'
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+import './styles/tailwind.css'
+import App from './App'
+import { mUser, mCommon } from './store'
+
+const container = document.getElementById('root')
+const root = createRoot(container)
+
+const Good = () => {
+  const snapUser = useSnapshot(mUser)
+  const [state, setState] = useSetState({
+    algorithm: null,
+    token: {},
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', mUser.theme)
+    if (mUser.theme === 'light') {
+      setState({
+        algorithm: theme.defaultAlgorithm,
+        token: {
+          colorPrimary: '#262626',
+        },
+      })
+    } else {
+      setState({
+        algorithm: theme.darkAlgorithm,
+      })
+    }
+  }, [snapUser.theme])
+
+  return (
+    <ConfigProvider
+      locale={zhCN}
+      theme={{
+        algorithm: state.algorithm,
+        token: state.token,
+      }}
+    >
+      <App />
+    </ConfigProvider>
+  )
+}
+
+root.render(<Good />)
