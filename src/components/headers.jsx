@@ -4,7 +4,7 @@ import { useSetState } from 'ahooks'
 import { useSnapshot } from 'valtio'
 
 import CHeadersRight from './headersRight'
-import imgLogo from '../assets/images/logo.png'
+import imgLogo from '../assets/images/logo.svg'
 import { mUser, mUserActions } from '../store'
 import _ from '../utils/lodash'
 

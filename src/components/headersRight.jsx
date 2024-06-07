@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { useSetState } from 'ahooks'
 import { useSnapshot } from 'valtio'
-import { Rate, Segmented } from 'antd'
+import { Rate, Segmented, Button } from 'antd'
 
 import { mUser, mCommon } from '../store'
+import { invoke } from '@tauri-apps/api/tauri'
 
 const App = () => {
   const snapUser = useSnapshot(mUser)
@@ -27,6 +28,15 @@ const App = () => {
             }}
           />
         ) : null}
+      </div>
+      <div>
+        <Button
+          onClick={() => {
+            invoke('123')
+          }}
+        >
+          测试rs
+        </Button>
       </div>
       <div>
         <Segmented
