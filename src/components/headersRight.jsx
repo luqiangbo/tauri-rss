@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSetState } from 'ahooks'
 import { useSnapshot } from 'valtio'
-import { Rate, Segmented, Button } from 'antd'
+import { Rate, Segmented, Button, message } from 'antd'
 
 import { mUser, mCommon } from '../store'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -31,8 +31,9 @@ const App = () => {
       </div>
       <div>
         <Button
-          onClick={() => {
-            invoke('123')
+          onClick={async () => {
+            const response = await invoke('greet', { name: '2343' })
+            message.info(JSON.stringify(response))
           }}
         >
           测试rs
